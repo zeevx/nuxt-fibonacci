@@ -10,36 +10,10 @@
     <br>
     <div>
     <div class="form-group row">
-      <form @submit="add">
-        <div class="col-md-12">
-            <div class="input-group">
-              <input
-              type="number"
-              class="form-control"
-              style=""
-              v-model="max"
-               name="max"
-              placeholder="Max Number">
-              <div class="input-group-append">
-                    <input type="submit" class="btn btn-success" value="Max">
-              </div>
-            </div>
-        <small id="max" class="form-text text-muted">Input the maximum number you want in the sequence.</small>
-        </div>
-      </form>
-      <form @submit="add">
-        <div class="col-md-12">
-          <div class="input-group">
-            <input type="number" class="form-control" v-model="next" name="next" placeholder="Add First/Next Number" >
-              <div class="input-group-append">
-                <input type="submit" class="btn btn-success" value="Add">
-              </div>
-          </div>
-            <small id="next" class="form-text text-muted">Input the first/next number you want in the sequence.</small>
-        </div>
-      </form>
+      <Add v-on:add-seq="addNewSeq" :seq="sequences" :max="newmax"/>
+      <Max v-on:add-max="addNewMax" :max="newmax"/>
       <div class="col-md-4">
-          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="submit" v-on="view_seq" class="btn btn-success">View Sequence?</button>
       </div>
     </div>
   </div>
@@ -47,37 +21,33 @@
 </template>
 
 <script>
-import uuid from 'uuid'
+import Add from '../components/Max.vue'
+import Max from '../components/Add.vue'
+
 export default {
   data () {
     return {
-      max: '',
-      next: '',
-      sequence: []
+      newmax: '',
+      sequences: []
     }
   },
   components: {
+    Add,
+    Max
   },
-  /* eslint-disable no-unused-vars */
-
   methods: {
-    makeSequence (e) {
-      e.preventDefault()
-      const newSequence = {
-        id: uuid.v4(),
-        max: this.max,
-        next: this.next
-      }
-      this.$emit(newSequence)
-      this.max = ''
+    addNewMax (newMax) {
+      this.newmax = newMax
     },
-    addNew (makeSequnce) {
-      this.sequence = [...this.sequence, makeSequnce]
+    addNewSeq (newSequence) {
+      this.sequences = [...this.sequences, newSequence]
+    },
+    view_seq () {
+      return true
     }
   }
-  /* eslint-disable no-unused-vars */
-
 }
+/* eslint-disable */
 </script>
 
 <style>
