@@ -27,12 +27,7 @@ export default {
   data () {
     return {
       next: '',
-      seq: [
-        {
-          id: 1,
-          value: 7
-        }
-      ]
+      seq: []
     }
   },
   /* eslint-disable no-unused-vars */
